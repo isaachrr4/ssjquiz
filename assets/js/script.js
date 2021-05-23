@@ -1,6 +1,9 @@
 var Score = 0;
-var timeLeft;
+var timeLeft = 30;
 var button =  document.getElementById("begin");
+var quizContainer = document.getElementById('quiz');
+var resultsContainer = document.getElementById('results');
+var submitButton = document.getElementById('submit');
 
 localStorage.setItem("question 1","answer")
 localStorage.setItem("question 2","answer")
@@ -76,9 +79,58 @@ button.addEventListener ("click", function() {
     alert("Lets GO!");
   });
 
- 
+  
+  var elem = document.getElementById('timer');
+  
+  var timerId = setInterval(countdown, 1000);
+  
+  function countdown() {
+    if (timeLeft == -1) {
+      clearTimeout(timerId);
+      doSomething();
+    } else {
+      elem.innerHTML = timeLeft + ' seconds remaining';
+      timeLeft--;
+    }
+  }
 
+  function displayQuiz(questions, quizContainer) {
+    var output = [];
+	var answers;
+
+	// for each question...
+	for(var i=0; i<questions.length; i++){
+		
+		// first reset the list of answers
+		answers = [];
+
+		// for each available answer to this question...
+		for(letter in questions[i].answers){
+
+			
+			answers.push(
+				'<label>'
+					+ '<input type="radio" name="question'+i+'" value="'+letter+'">'
+					+ letter + ': '
+					+ questions[i].answers[letter]
+				+ '</label>'
+			);
+		}
+
+		output.push(
+			'<div class="question">' + questions[i].question + '</div>'
+			+ '<div class="answers">' + answers.join('') + '</div>'
+		);
+	}
+
+	
+	quizContainer.innerHTML = output.join('');
+  }
+     
+  showQuestions(questions, quizContainer);
+
+  
   
 
 // display quiz right away
-buildQuiz();
+displayQuiz(myQuestions, quizContainer, resultsContainer);
