@@ -94,31 +94,31 @@ button.addEventListener ("click", function() {
     }
   }
 
-  function displayQuiz(questions, quizContainer) {
+  function displayQuiz(_myQuestions, quizContainer) {
     var output = [];
 	var answers;
 
 	// for each question...
-	for(var i=0; i<questions.length; i++){
+	for(var i=0; i<myQuestions.length; i++){
 		
 		// first reset the list of answers
 		answers = [];
 
 		// for each available answer to this question...
-		for(letter in questions[i].answers){
+		for(letter in myQuestions[i].answers){
 
 			
 			answers.push(
 				'<label>'
 					+ '<input type="radio" name="question'+i+'" value="'+letter+'">'
 					+ letter + ': '
-					+ questions[i].answers[letter]
+					+ myQuestions[i].answers[letter]
 				+ '</label>'
 			);
 		}
 
 		output.push(
-			'<div class="question">' + questions[i].question + '</div>'
+			'<div class="question">' + myQuestions[i].question + '</div>'
 			+ '<div class="answers">' + answers.join('') + '</div>'
 		);
 	}
@@ -127,7 +127,7 @@ button.addEventListener ("click", function() {
 	quizContainer.innerHTML = output.join('');
   }
      
-  showQuestions(questions, quizContainer);
+  displayQuiz(myQuestions, quizContainer);
 
   
   
